@@ -6,7 +6,6 @@ Require vim in js way
 Install
 -------
 
-
 ``Plug 'gu-fan/require.vim'``
 
 
