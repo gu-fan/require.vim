@@ -92,7 +92,7 @@ function! s:require(module, sfile, ...)
         if !exists("s:modules[f]")
             let s:modules[f] = {}
         else
-            Debug '!!!!Already required '.f
+            " Debug '!!!!Already required '.f
             if exists('s:exports[f]')
                 return s:exports[f]
             else
@@ -104,18 +104,19 @@ function! s:require(module, sfile, ...)
             let s:_main = f
             let s:modules[f].chain = {}
             let s:modules[f].chain[f] = 1
-            Debug '>>>>  '.m
+            " Debug '>>>>  '.m
         else
             " AVOID recursive require chain
             let s:modules[s:_main].chain[f] = 1
         endif
 
-        Debug 'so '.f
-        exe g:debug ? 'so '.f :  'silent so '.f
+        " Debug 'so '.f
+        exe  'silent so '.f
+        " exe g:debug ? 'so '.f :  'silent so '.f
 
         if s:_main == f
             let s:_main = ''
-            Debug '<<<<  '.m
+            " Debug '<<<<  '.m
         endif
 
         if exists('s:exports[f]')
