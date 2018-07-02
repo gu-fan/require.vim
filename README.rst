@@ -14,7 +14,7 @@ Useage
 ------
 
 
-`Export` Export a module 
+``Export`` a module 
 
  .. code:: vim   
      
@@ -29,7 +29,7 @@ Useage
      Export k
 
 
-`Require` or `Import`
+``Require`` or ``Import`` a module
 
  .. code:: vim   
      
@@ -39,7 +39,7 @@ Useage
      let msg = ECHO()  " export
 
      
-`require.at`
+``require.at``
 
  .. code:: vim   
      
@@ -53,8 +53,11 @@ Useage
 ----
 
 By default, when require, 
+
 it will first search module in relative paths,
+
 if not found, then search the dot.env path
+
 then it will search the &runtimepath
 
-with 'test_export.vim' 'test_export/index.vim' 'plugin/test_export.vim'
+with file pattern match 'test_export.vim' 'test_export/index.vim' 'plugin/test_export.vim'
