@@ -154,7 +154,7 @@ function! s:export(val, sfile, bang) abort
     " echom string(a:val)
  
     let f = resolve(fnamemodify(a:sfile, ':p:gs?\\?/?'))
-    echom f
+    " echom f
 
     if !bang && exists('s:exports[f]')
         " echom "[require.vim]  ". f . " already exported"
