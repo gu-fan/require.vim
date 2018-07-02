@@ -16,7 +16,7 @@ Useage
 
 `Export` Export a module 
 
- .. highlight:: vim   
+ .. code:: vim   
      
      " test_export.vim
      let k = {a:1}
@@ -31,7 +31,7 @@ Useage
 
 `Require` or `Import`
 
- .. highlight:: vim   
+ .. code:: vim   
      
      " test_import.vim
  
@@ -41,7 +41,7 @@ Useage
      
 `require.at`
 
- .. highlight:: vim   
+ .. code:: vim   
      
      " test_import.vim
  
