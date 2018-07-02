@@ -43,6 +43,11 @@
 "
 " DONE:
 " the file name include '..' is not normalized.
+" if exists("s:is_loaded") 
+"     finish
+" else 
+"     let s:is_loaded = 1
+" endif
 let s:dot_dir = expand('<sfile>:p:h')
 
 let g:require_module_index = 'index'
@@ -57,6 +62,9 @@ let g:_r = [s:_main,s:modules,s:exports]
 
 
 function! s:require(module, sfile, ...)
+
+    " echom "IMPORT"
+    " echom a:sfile . ":" .  a:module
 
     let slnum = a:0 ? a:1 : 0
 
@@ -111,7 +119,7 @@ function! s:require(module, sfile, ...)
         endif
 
         " Debug 'so '.f
-        exe  'silent so '.f
+        exe  'so '.f
         " exe g:debug ? 'so '.f :  'silent so '.f
 
         if s:_main == f
@@ -127,40 +135,44 @@ function! s:require(module, sfile, ...)
 
     else
         " NOTE: we can use setqflist or cex to set error list.
-        throw  m . " MODULE NOT FOUND:  ".a:sfile. ":". slnum
+        throw  "[require.vim] " . m . "NOT FOUND ".a:sfile. ":". slnum
     endif
 
 endfun
 
-function! Require(module, ...)
-    return s:require(a:module,  expand('<sfile>:p'), expand('<slnum>'))
+let g:require = {}
+function! g:require.at(module, ...)
+    return s:require(a:module, expand('<sfile>:p'), expand('<slnum>'))
 endfunction
 
-function! Exports(val, sfile, bang) abort
+function! s:export(val, sfile, bang) abort
     let bang = a:bang == '!' ? 1 : 0
+    " echom "EXPORT"
+    " echom string(a:val)
+    " echom a:sfile
+ 
 
     let f = resolve(fnamemodify(a:sfile, ':p:gs?\\?/?'))
 
     if !bang && exists('s:exports[f]')
-        throw "ALREADY EXPORTED ". f
+        " echom "[require.vim]  ". f . " already exported"
     else
         let s:exports[f] = a:val
     endif
 
 endfunction
-function! Path()
-    return eval("expand('<cfile>:p')")
+let g:export= {}
+let g:export.chain  = s:exports
+function! g:export.at(val, sfile, ...)
+    call s:export(a:val, a:sfile, 1)
 endfunction
 
 com! -nargs=* Require call s:require(<q-args>, expand('<sfile>:p'), expand('<slnum>'))
 com! -nargs=* Import call s:require(<q-args>, expand('<sfile>:p'), expand('<slnum>'))
-com! -nargs=* -bang Exports call Exports(<args>, expand('<sfile>:p'), "<bang>")
-com! -nargs=* -bang Export call Exports(<args>, expand('<sfile>:p'), "<bang>")
+com! -nargs=* -bang Export call s:export(<args>, expand('<sfile>:p'), "<bang>")
 
-if !exists("g:require") 
-    let g:require = {}
-    let g:require.at  = function("Require")
-else 
-    echom "g:require has already defined"
-endif
+" if !exists("g:require") 
+" else 
+    " echom "[require.vim] g:require has already defined"
+" endif
 
