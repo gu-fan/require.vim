@@ -1,7 +1,7 @@
 require.vim
 ===========
 
-Require vim module
+Require vim in js way
 
 Install
 -------
