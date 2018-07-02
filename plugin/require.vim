@@ -60,11 +60,11 @@ let s:modules = {}
 let s:exports = {}
 let g:_r = [s:_main,s:modules,s:exports]
 
+set sua=.vim,index.vim
 
 function! s:require(module, sfile, ...)
 
     " echom "IMPORT"
-    " echom a:sfile . ":" .  a:module
 
     let slnum = a:0 ? a:1 : 0
 
@@ -108,6 +108,8 @@ function! s:require(module, sfile, ...)
             endif
         endif
 
+        " echom f
+
         if s:_main == ''
             let s:_main = f
             let s:modules[f].chain = {}
@@ -135,24 +137,24 @@ function! s:require(module, sfile, ...)
 
     else
         " NOTE: we can use setqflist or cex to set error list.
-        throw  "[require.vim] " . m . "NOT FOUND ".a:sfile. ":". slnum
+        echom  "[require.vim] " . m . "NOT FOUND ".a:sfile. ":". slnum
+        echom a:sfile . ":" .  a:module
     endif
 
 endfun
 
 let g:require = {}
-function! g:require.at(module, ...)
-    return s:require(a:module, expand('<sfile>:p'), expand('<slnum>'))
+function! g:require.at(module,sfile,... )
+    return s:require(a:module, a:sfile, expand('<slnum>'))
 endfunction
 
 function! s:export(val, sfile, bang) abort
     let bang = a:bang == '!' ? 1 : 0
     " echom "EXPORT"
     " echom string(a:val)
-    " echom a:sfile
  
-
     let f = resolve(fnamemodify(a:sfile, ':p:gs?\\?/?'))
+    echom f
 
     if !bang && exists('s:exports[f]')
         " echom "[require.vim]  ". f . " already exported"

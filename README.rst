@@ -7,7 +7,7 @@ Install
 -------
 
 
-    Plug 'gu-fan/require.vim'
+``Plug 'gu-fan/require.vim'``
 
 
 Useage
@@ -21,8 +21,12 @@ Useage
      " test_export.vim
      let k = {a:1}
 
-     function ECHO()
-         return 'export'
+     function k.msg()
+         return 'private msg'
+     endfun
+
+     function GlobalFunc()
+         return 'Global'
      endfun
 
 
@@ -36,17 +40,25 @@ Useage
      " test_import.vim
  
      Require test_export
-     let msg = ECHO()  " export
+     let msg = GlobalFunc()  " Global
 
+``export.at`` a private module
+
+ .. code:: vim   
      
-``require.at``
+     " test_private.vim
+ 
+     let s:private = {a:1}
+     call export.at(s:private, expand("<sfile>:p")) " should pass the path to resolve the name
+
+``require.at`` a module
 
  .. code:: vim   
      
      " test_import.vim
  
-     let k = require.at('test_export')
-     echo k     " {a:1}
+     let k = require.at('test_private', expand("<sfile>:p")) " should pass the path to resolve the name
+     echo k           " {a:1}
 
 
 
