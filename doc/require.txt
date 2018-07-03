@@ -116,7 +116,7 @@ Your can require multiple modules
 NOTE all test are located in test folder
 
 -----------------------------------------------------------------------------
-3. Module Resolve                                       *require-resolve*
+3. Resolve                                              *require-resolve*
 
 when requiring a 'MODULE', it will >
 

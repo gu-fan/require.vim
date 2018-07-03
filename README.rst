@@ -103,8 +103,8 @@ Your can require multiple modules
 **NOTE** all test are located in test folder
 
 
-Module Resolve
---------------
+Resolve
+--------
 
 when requiring a 'MODULE', it will
 
