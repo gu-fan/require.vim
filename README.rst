@@ -106,13 +106,13 @@ Your can require multiple modules
 Module Resolve
 --------------
 
-when requiring a 'MODULE'
+when requiring a 'MODULE', it will
 
 1. first search modules in relative paths
 2. then search ``g:require.user_path`` if not found
 3. then search ``$VIMRUNTIME`` path
 
-the file pattern will check 
+the file pattern used
 
 - 'MODULE.vim' 
 - 'MODULE/MODULE_NAME.vim'
