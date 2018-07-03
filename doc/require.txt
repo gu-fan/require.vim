@@ -46,8 +46,8 @@ Install >
      echom GlobalFunc() == "global"
 
 
-
-Your can require multiple modules
+<
+    Your can require multiple modules
 
 >
      
@@ -78,10 +78,11 @@ Your can require multiple modules
      echom GlobalFuncTerm() == "simple terminal"
 
 
+*require.at* to retrieve exported value
 
-*Export* a plain value (no script/local value included)
 
-*require.at* to retrieve value
+    *Export* a plain value (no script/local value included)
+
 
 >
 
@@ -99,9 +100,9 @@ Your can require multiple modules
     echom type(plain.dic.fun) == v:t_func
      
 
+<
 
-
-*export.at* to export private value
+    *export.at* to export private value
 
 >
      

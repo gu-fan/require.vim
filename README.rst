@@ -32,8 +32,8 @@ Useage
 
      echom GlobalFunc() == "global"
 
-
-Your can require multiple modules
+..
+    Your can require multiple modules
 
 
 .. code:: vim   
@@ -65,11 +65,10 @@ Your can require multiple modules
      echom GlobalFuncTerm() == "simple terminal"
 
 
+``require.at`` to retrieve exported value
 
-``Export`` a plain value (no script/local value included)
 
-
-``require.at`` to retrieve value
+- ``Export`` a plain value (no script/local value included)
 
 
 .. code:: vim   
@@ -89,7 +88,7 @@ Your can require multiple modules
     
 
 
-``export.at`` to export private value
+- ``export.at`` to export private value
 
 
 .. code:: vim   
