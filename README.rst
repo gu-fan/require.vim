@@ -1,7 +1,7 @@
 require.vim
 ===========
 
-require vim in easy way
+require vim easily
 
 Install
 -------

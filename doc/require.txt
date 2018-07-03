@@ -1,4 +1,4 @@
-*require.vim* require vim in easy way
+*require.vim* require vim easyily
 
 
 
