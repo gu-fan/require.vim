@@ -123,7 +123,7 @@ the file pattern used
 Further
 -------
 
-``g:require`` && ``g:export`` object are the main objects used by plugin::
+``g:require`` && ``g:export`` are the main objects used by plugin::
 
 
     g:require.user_path             a user_path array

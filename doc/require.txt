@@ -135,11 +135,11 @@ the file pattern used >
 4. Further                                              *require-further*
 
 
-*g:require* && *g:export* object are the main objects used by plugin::
+*g:require* && *g:export* are the main objects used by plugin::
 
 
     *g:require.user_path*           a user_path array
-                                    default ['~/.vim/plugged/']
+                                  default ['~/.vim/plugged/']~
 
     ---------------------------------------------------------
     core functions and values~
