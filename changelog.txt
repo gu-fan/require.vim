@@ -1,0 +1,53 @@
+" require.vim
+"
+" Defining Require command (like expression) and Require() function.
+"
+" The Require Command will import a vim module/file/plugin
+"
+" The Require() Function will import the module, and return s:exports in
+" that module
+"
+" NOTE:
+" .vim or .vimrc
+" This is defining, not funcion,
+" so no need to source the whole vimrc
+" so, just use '.vim'
+"
+" DONE:
+" 'require' need throw an error when module not found
+"
+" NOTE: the '%:p' in require.vim script's function
+" will be the require.vim's path. so we pass a <sfile> in.
+"
+" DONE:
+" source file of dirs with following sequence.
+"   relative dir
+"   relative dir and it's all parent's modules/ directory: if got one.
+"   vim-box's dir
+"   vim runtime
+"
+" DONE:
+" Avoid recursive chain requiring
+"
+" DONE:
+" merge s:require and Require
+"
+" NOTE: This file is in vim-box/lib
+"
+" XXX
+"   We should not use cache, or cache for $VIMRUNTIME only,
+"   as it will not load relative modules.
+" SOLVED:
+"   use full path not module name as key (s:modules)
+"   and then removed chain name
+"
+" DONE:
+" the file name include '..' is not normalized.
+" if exists("s:is_loaded") 
+"     finish
+" else 
+"     let s:is_loaded = 1
+" endif
+" let s:dot_dir = expand('<sfile>:p:h')
+
+" Require for command

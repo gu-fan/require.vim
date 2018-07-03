@@ -1,160 +1,139 @@
-" require.vim
-"
-" Defining Require command (like expression) and Require() function.
-"
-" The Require Command will import a vim module/file/plugin
-"
-" The Require() Function will import the module, and return s:exports in
-" that module
-"
-" NOTE:
-" .vim or .vimrc
-" This is defining, not funcion,
-" so no need to source the whole vimrc
-" so, just use '.vim'
-"
-" DONE:
-" 'require' need throw an error when module not found
-"
-" NOTE: the '%:p' in require.vim script's function
-" will be the require.vim's path. so we pass a <sfile> in.
-"
-" DONE:
-" source file of dirs with following sequence.
-"   relative dir
-"   relative dir and it's all parent's modules/ directory: if got one.
-"   vim-box's dir
-"   vim runtime
-"
-" DONE:
-" Avoid recursive chain requiring
-"
-" DONE:
-" merge s:require and Require
-"
-" NOTE: This file is in vim-box/lib
-"
-" XXX
-"   We should not use cache, or cache for $VIMRUNTIME only,
-"   as it will not load relative modules.
-" SOLVED:
-"   use full path not module name as key (s:modules)
-"   and then removed chain name
-"
-" DONE:
-" the file name include '..' is not normalized.
-" if exists("s:is_loaded") 
-"     finish
-" else 
-"     let s:is_loaded = 1
-" endif
-let s:dot_dir = expand('<sfile>:p:h')
-
-let g:require_module_index = 'index'
-
-" Require for command
-let s:_main = ''
-let s:modules = {}
-
-" contain all the exported values
-let s:exports = {}
-let g:_r = [s:_main,s:modules,s:exports]
+" vim:fdm=indent
+" require.vim           require vim in easy way
+" Author:    gu.fan at https://github.com/gu-fan
+" License:   wtfpl at http://sam.zoy.org/wtfpl/COPYING.
 
 set sua=.vim,index.vim
 
-function! s:require(module, sfile, ...)
+let g:require = {}
+let g:export= {}
 
-    " echom "IMPORT"
+" contains all the module name
+let s:modules = {}
+" contain all the module exported values
+let s:exports = {}
+" indicate current main
+let s:_main = ''
 
-    let slnum = a:0 ? a:1 : 0
+let g:require.user_path = ['~/.vim/plugged/']
+let s:user_path = []
 
+fun! g:require.resolve(module, sfile)
+    let module = a:module
+    let sfile = a:sfile
     " normalize filename with '/', for mac
-    let m = fnamemodify(a:module, ':gs?\\?/?')
-    let p = fnamemodify(a:sfile, ':h:gs?\\?/?')
+    let m = fnamemodify(module, ':gs?\\?/?')
+    let p = fnamemodify(sfile, ':h:gs?\\?/?')
     let _sep = '/'
-    let tail = fnamemodify(a:module, ':t:r:gs?\\?/?')
-
-    " STEP1: generate possible paths
+    let tail = fnamemodify(module, ':t:r:gs?\\?/?')
     let _files = [
             \ p ._sep. m .'.vim',
             \ p ._sep. m ._sep. tail.'.vim',
             \ p ._sep. m ._sep. 'index.vim',
-            \ s:dot_dir ._sep. m .'.vim',
             \ $VIMRUNTIME ._sep. m .'.vim',
-            \ $VIMRUNTIME ._sep. 'autoload' . _sep . m .'.vim',
+            \ $VIMRUNTIME ._sep. 'plugin' . _sep . m .'.vim',
             \ ]
 
-    " get all modules of the parents dir
-    let p_len = len(split(p, _sep))
-    let parents = map(range(p_len), 'fnamemodify(p, repeat(":h" ,v:val))')
-    call map(parents, 'v:val._sep."modules"'
-            \ .'._sep.m._sep.g:require_module_index .".vim"')
-    call extend(_files, parents, 1)
+    let user_path = map(copy(s:user_path), "v:val . m . '.vim'")
+    call extend(_files, user_path, 1)
+    let user_path2 = map(copy(s:user_path), "v:val . m . _sep.'index.vim'")
+    call extend(_files, user_path2, 1)
+    " echom string(_files)
+
     call filter(_files, 'filereadable(v:val)')
+    return _files
+endfun
 
-    " STEP2: source the valid file.
-    if !empty(_files)
-        let f = resolve(_files[0])
 
-        " NOTE: Avoid recursive chaining
-        if !exists("s:modules[f]")
-            let s:modules[f] = {}
-        else
-            " Debug '!!!!Already required '.f
-            if exists('s:exports[f]')
-                return s:exports[f]
-            else
-                return 0
-            endif
-        endif
+fun! g:require.source(files)
 
-        " echom f
+    let f = resolve(a:files[0])
 
-        if s:_main == ''
-            let s:_main = f
-            let s:modules[f].chain = {}
-            let s:modules[f].chain[f] = 1
-            " Debug '>>>>  '.m
-        else
-            " AVOID recursive require chain
-            let s:modules[s:_main].chain[f] = 1
-        endif
-
-        " Debug 'so '.f
-        exe  'so '.f
-        " exe g:debug ? 'so '.f :  'silent so '.f
-
-        if s:_main == f
-            let s:_main = ''
-            " Debug '<<<<  '.m
-        endif
-
+    " NOTE: Avoid recursive chaining
+    if !exists("s:modules[f]")
+        let s:modules[f] = {}
+    else
         if exists('s:exports[f]')
             return s:exports[f]
         else
-            return 0
+            " echom "[require.vim] no exported value at ". f
+            return -1
         endif
+    endif
 
+    if s:_main == ''
+        let s:_main = f
+        let s:modules[f].chain = {}
+        let s:modules[f].chain[f] = 1
+    else
+        " AVOID recursive require chaining
+        let s:modules[s:_main].chain[f] = 1
+    endif
+
+    exe  'so '.f
+
+    if s:_main == f
+        let s:_main = ''
+    endif
+
+    if exists('s:exports[f]')
+        return s:exports[f]
+    else
+        " echom "[require.vim] no exported value at ". f
+        return -1
+    endif
+    
+endfun
+
+fun! s:_require(sfile, slnum, module)
+
+    let module = a:module
+    let slnum = a:slnum
+    let sfile = a:sfile
+
+    " STEP1: generate possible paths
+    let _files = g:require.resolve(module, sfile)
+
+
+    " STEP2: source the valid file.
+    if !empty(_files)
+        return g:require.source(_files)
     else
         " NOTE: we can use setqflist or cex to set error list.
-        echom  "[require.vim] " . m . "NOT FOUND ".a:sfile. ":". slnum
-        echom a:sfile . ":" .  a:module
+        echohl Error
+        echom  "[require.vim] module '" . m . "' not found at ".a:sfile. ":". slnum
+        echom a:sfile . ":" .  module
+        echohl normal
+        return -2
+    endif
+    
+endfun
+
+function! s:require(sfile,slnum, module)
+
+    if type(a:module) == v:t_list
+        for mod in a:module
+            call s:_require(a:sfile, a:slnum, mod)
+        endfor
+    elseif type(a:module) == v:t_dict
+        for mod in values(a:module)
+            call s:_require(a:sfile, a:slnum, mod)
+        endfor
+    elseif type(a:module) == v:t_string
+        call s:_require(a:sfile, a:slnum, a:module)
+    elseif type(a:module) == v:t_number
+        call s:_require(a:sfile, a:slnum, a:module)
+    else
+        throw "unexpcted type of module " . string(a:module)
     endif
 
 endfun
 
-let g:require = {}
-function! g:require.at(module,sfile,... )
-    return s:require(a:module, a:sfile, expand('<slnum>'))
-endfunction
 
 function! s:export(val, sfile, bang) abort
     let bang = a:bang == '!' ? 1 : 0
-    " echom "EXPORT"
-    " echom string(a:val)
  
     let f = resolve(fnamemodify(a:sfile, ':p:gs?\\?/?'))
-    " echom f
 
     if !bang && exists('s:exports[f]')
         " echom "[require.vim]  ". f . " already exported"
@@ -163,18 +142,30 @@ function! s:export(val, sfile, bang) abort
     endif
 
 endfunction
-let g:export= {}
-let g:export.chain  = s:exports
+
 function! g:export.at(val, sfile, ...)
     call s:export(a:val, a:sfile, 1)
 endfunction
 
-com! -nargs=* Require call s:require(<q-args>, expand('<sfile>:p'), expand('<slnum>'))
-com! -nargs=* Import call s:require(<q-args>, expand('<sfile>:p'), expand('<slnum>'))
+function! g:require.at(module, sfile, ... )
+    return s:_require(a:sfile, expand('<slnum>'), a:module)
+endfunction
+
+let g:export.values = s:exports
+let g:require.modules = s:modules
+
+" normalize user paths 
+fun! s:trim_slash(key, path)
+    return expand(fnamemodify(a:path, ':gs?\\?/?'))
+endfun
+
+fun! s:init()
+    let user_path = exists("g:require.user_path") ? g:require.user_path : []
+    let s:user_path  = map(user_path, function("s:trim_slash"))
+endfun
+call s:init()
+
+com! -nargs=1 Require call s:require(expand('<sfile>:p'), expand('<slnum>'),<args>)
 com! -nargs=* -bang Export call s:export(<args>, expand('<sfile>:p'), "<bang>")
 
-" if !exists("g:require") 
-" else 
-    " echom "[require.vim] g:require has already defined"
-" endif
-
+com! -nargs=0 ClearRequireCache let s:modules = {} | let s:exports = {}
