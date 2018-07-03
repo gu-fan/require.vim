@@ -1,4 +1,4 @@
-" require.vim           require vim easily
+" require.vim           require vim easy
 " Author:    gu.fan at https://github.com/gu-fan
 " License:   wtfpl at http://sam.zoy.org/wtfpl/COPYING.
 
