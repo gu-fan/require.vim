@@ -155,7 +155,7 @@ Further
     g:require.source                sourcer
 
     g:require.modules               required modules
-    g:export.values                 export values
+    g:export.values                 exported values
 
     g:require.at                    require function
                                     return value
