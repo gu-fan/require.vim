@@ -11,7 +11,7 @@ Install
 Useage
 ------
 
-``Require`` a module to ensure its loaded
+``Require`` a module to ensure loaded
 
  .. code:: vim   
      
@@ -42,15 +42,19 @@ Your can require multiple modules
      func GlobalFuncC()
          return "global c"
      endfun
+     " ~/.plugged/simpleterm.vim/test/require.vim
+     func GlobalFuncTerm()
+         return "simple terminal"
+     endfun
 
      
      " ./test.vim
-     " require multiple module
-     Require ['lib/a', 'lib/b', '../c']
+     " require multiple modules
+     Require ['lib/a', 'lib/b', '../c', 'simpleterm.vim/test/require']
      echom GlobalFuncA() == "global a"
      echom GlobalFuncB() == "global b"
      echom GlobalFuncC() == "global c"
-
+     echom GlobalFuncTerm() == "simple terminal"
 
 
 ``Export`` a plain value (no script/local value included)
