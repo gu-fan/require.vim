@@ -2,6 +2,7 @@
 
 
 
+
                        ------------------------------~
                        -- Require  - vim            -~
                        -- _        -                -~
@@ -12,12 +13,18 @@
 
 
 
+
+
 -----------------------------------------------------------------------------
 1. Install                                             *require-install*
 
 
+
+
 Install >
     Plug 'gu-fan/require.vim'
+
+
 
 -----------------------------------------------------------------------------
 2. Usage                                                *require-usage*
@@ -37,6 +44,8 @@ Install >
      Require 'global'
 
      echom GlobalFunc() == "global"
+
+
 
 Your can require multiple modules
 
@@ -90,6 +99,8 @@ Your can require multiple modules
     echom type(plain.dic.fun) == v:t_func
      
 
+
+
 *export.at* to export private value
 
 >
@@ -110,19 +121,27 @@ Your can require multiple modules
     echom type(private[4].fun) == v:t_func
 
 
+
 *ClearRequireCache* to clear require cache without restart vim
+
 
 
 `TEST` all test are located in test folder
 
+
+
 -----------------------------------------------------------------------------
 3. Resolve                                              *require-resolve*
+
+
 
 when requiring a 'MODULE', it will >
 
     1. first search module in relative paths
     2. then search ``g:require.user_path``
     3. then search ``$VIMRUNTIME`` path
+
+
 
 the file pattern used >
 
@@ -133,6 +152,7 @@ the file pattern used >
 
 -----------------------------------------------------------------------------
 4. Further                                              *require-further*
+
 
 
 *g:require* && *g:export* are the main objects used by plugin::
@@ -157,13 +177,22 @@ the file pattern used >
 
     g:export.at                     export function
 
+
+
 -----------------------------------------------------------------------------
 4. Author & License  
+
+
 
 Author: >
     gu.fan at https://github.com/gu-fan
 
+
+
+
 License: >
     wtfpl at http://sam.zoy.org/wtfpl/COPYING.
+
+
 
 vim:tw=78:ts=8:ft=help:norl:

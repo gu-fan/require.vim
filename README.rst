@@ -1,12 +1,18 @@
 require.vim
 ===========
 
+
 require vim easy
+
 
 Install
 -------
 
+
+
 ``Plug 'gu-fan/require.vim'``
+
+
 
 Useage
 ------
@@ -26,7 +32,9 @@ Useage
 
      echom GlobalFunc() == "global"
 
+
 Your can require multiple modules
+
 
 .. code:: vim   
      
@@ -57,9 +65,12 @@ Your can require multiple modules
      echom GlobalFuncTerm() == "simple terminal"
 
 
+
 ``Export`` a plain value (no script/local value included)
 
+
 ``require.at`` to retrieve value
+
 
 .. code:: vim   
 
@@ -75,9 +86,11 @@ Your can require multiple modules
     let plain = require.at("plain", expand("<sfile>:p"))
     echom plain.a == "1"
     echom type(plain.dic.fun) == v:t_func
-     
+    
+
 
 ``export.at`` to export private value
+
 
 .. code:: vim   
      
@@ -97,6 +110,7 @@ Your can require multiple modules
     echom type(private[4].fun) == v:t_func
 
 
+
 ``ClearRequireCache`` to clear require cache without restart vim
 
 
@@ -106,13 +120,17 @@ Your can require multiple modules
 Resolve
 --------
 
+
 when requiring a 'MODULE', it will
+
 
 1. first search module in relative paths
 2. then search ``g:require.user_path``
 3. then search ``$VIMRUNTIME`` path
 
+
 the file pattern used
+
 
 - 'MODULE.vim' 
 - 'MODULE/MODULE_NAME.vim'
@@ -122,6 +140,7 @@ the file pattern used
 
 Further
 -------
+
 
 ``g:require`` && ``g:export`` are the main objects used by plugin::
 
@@ -145,11 +164,14 @@ Further
 
     g:export.at                     export function
 
+
 Author & License
 ----------------
 
+
 Author
     gu.fan at https://github.com/gu-fan
+
 
 License
     wtfpl at http://sam.zoy.org/wtfpl/COPYING.
