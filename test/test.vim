@@ -6,7 +6,7 @@ fun! s:test()
 
 
     " require multiple modules
-    Require ['lib/a', 'lib/b', '../c', 'simpleterm.vim/test/require']
+    Require ['lib/a', 'lib/b', './c', 'simpleterm.vim/test/require']
     echom GlobalFuncA() == "global a"
     echom GlobalFuncB() == "global b"
     echom GlobalFuncC() == "global c"
