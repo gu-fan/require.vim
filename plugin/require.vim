@@ -153,6 +153,7 @@ endfunction
 let g:export.values = s:exports
 let g:require.modules = s:modules
 
+
 " normalize user paths 
 fun! s:trim_slash(key, path)
     return expand(fnamemodify(a:path, ':gs?\\?/?'))
