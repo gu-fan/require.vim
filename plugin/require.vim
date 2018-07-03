@@ -1,4 +1,3 @@
-" vim:fdm=indent
 " require.vim           require vim in easy way
 " Author:    gu.fan at https://github.com/gu-fan
 " License:   wtfpl at http://sam.zoy.org/wtfpl/COPYING.
@@ -169,3 +168,5 @@ com! -nargs=1 Require call s:require(expand('<sfile>:p'), expand('<slnum>'),<arg
 com! -nargs=* -bang Export call s:export(<args>, expand('<sfile>:p'), "<bang>")
 
 com! -nargs=0 ClearRequireCache let s:modules = {} | let s:exports = {}
+
+" vim:fdm=indent
