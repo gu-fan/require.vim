@@ -13,7 +13,7 @@ Useage
 
 ``Require`` a module to ensure loaded
 
- .. code:: vim   
+.. code:: vim   
      
      " ./global.vim
      func GlobalFunc()
@@ -28,7 +28,7 @@ Useage
 
 Your can require multiple modules
 
- .. code:: vim   
+.. code:: vim   
      
      " ./lib/a.vim
      func GlobalFuncA()
@@ -61,7 +61,7 @@ Your can require multiple modules
 
 ``require.at`` to retrieve value
 
- .. code:: vim   
+.. code:: vim   
 
      " ./plain.vim
     let dic = {}
@@ -79,7 +79,7 @@ Your can require multiple modules
 
 ``export.at`` to export private value
 
- .. code:: vim   
+.. code:: vim   
      
      " ./private.vim
     let s:b = {"a":1,"b":2}
