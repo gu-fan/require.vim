@@ -108,8 +108,8 @@ Module Resolve
 
 when requiring a 'MODULE', it will
 
-1. first search modules in relative paths
-2. then search ``g:require.user_path`` if not found
+1. first search module in relative paths
+2. then search ``g:require.user_path``
 3. then search ``$VIMRUNTIME`` path
 
 the file pattern used
