@@ -32,8 +32,8 @@ Useage
 
      echom GlobalFunc() == "global"
 
-..
-    Your can require multiple modules
+
+- Your can require multiple modules
 
 
 .. code:: vim   
