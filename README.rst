@@ -126,8 +126,8 @@ Further
 ``g:require`` && ``g:export`` object are the main objects used by plugin::
 
 
-    g:require.user_path             the user_path
-                                    default '~/.vim/plugged/'
+    g:require.user_path             a user_path array
+                                    default ['~/.vim/plugged/']
 
     ---------------------------------------------------------
     core functions and values
