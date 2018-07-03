@@ -100,7 +100,7 @@ Your can require multiple modules
 ``ClearRequireCache`` to clear require cache without restart vim
 
 
-**NOTE** all test are located in test folder
+``TEST`` all test are located in test folder
 
 
 Resolve
