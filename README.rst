@@ -134,12 +134,11 @@ Further
 
     g:require.resolve               resolver
     g:require.source                sourcer
-    g:require.modules               required modules
 
+    g:require.modules               required modules
     g:export.values                 export values
 
     g:require.at                    require function
-
                                     return value
                                     -1  : no value
                                     -2  : no such module
