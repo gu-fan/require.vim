@@ -2,8 +2,6 @@
 " Author:    gu.fan at https://github.com/gu-fan
 " License:   wtfpl at http://sam.zoy.org/wtfpl/COPYING.
 
-set sua=.vim,index.vim
-
 let g:require = {}
 let g:export= {}
 

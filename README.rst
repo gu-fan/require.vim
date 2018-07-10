@@ -164,6 +164,25 @@ Further
     g:export.at                     export function
 
 
+|
+
+::
+
+    ----------------------------------------
+    " use snippet if needed 
+
+    snippet     export
+    options     head
+    
+        call export.at(${1:value}, expand('<sfile>:p'))
+
+
+    snippet     require 
+    options     head
+    
+        let ${1:value} = require.at('${2:module}', expand('<sfile>:p'))
+
+
 Author & License
 ----------------
 
@@ -173,4 +192,4 @@ Author
 
 
 License
-    wtfpl at http://sam.zoy.org/wtfpl/COPYING.
+    MIT License

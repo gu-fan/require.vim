@@ -192,7 +192,7 @@ Author: >
 
 
 License: >
-    wtfpl at http://sam.zoy.org/wtfpl/COPYING.
+    MIT License
 
 
 
