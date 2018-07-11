@@ -182,6 +182,14 @@ Further
     
         let ${1:value} = require.at('${2:module}', expand('<sfile>:p'))
 
+Thought
+-------
+
+WHY?
+
+    1. simplify module structure and module reuse
+    2. require needed value directly
+    3. avoid using of &rtp, and increase speed
 
 Author & License
 ----------------
