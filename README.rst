@@ -4,6 +4,10 @@ require.vim
 
 require vim easy
 
+Note
+----
+
+now unstable, use at your own risk
 
 Install
 -------
@@ -16,6 +20,50 @@ Install
 
 Useage
 ------
+
+
+``require.at`` to retrieve exported value
+
+
+- ``Export`` a plain value (no script/local value included)
+
+
+.. code:: vim   
+
+     " ./plain.vim
+    let dic = {}
+    func dic.fun() dict
+        return "function"
+    endfun
+
+    Export {"a": 1 , "b": 2, "test": [1,2,3], "dic": dic}
+
+    " ./test.vim
+    let plain = require.at("plain", expand("<sfile>:p"))
+    echom plain.a == "1"
+    echom type(plain.dic.fun) == v:t_func
+    
+
+
+- ``export.at`` to export private value
+
+
+.. code:: vim   
+     
+     " ./private.vim
+    let s:b = {"a":1,"b":2}
+    fun! s:b.fun() dict
+        return 3
+    endfun
+    let s:k = [1,2,3,4, s:b]
+
+    call export.at(s:k, expand("<sfile>:p"))
+
+    " ./test.vim
+    " require private vmodule
+    let private = require.at("private", expand("<sfile>:p"))
+    echom private[1] == 2
+    echom type(private[4].fun) == v:t_func
 
 ``Require`` a module to ensure loaded
 
@@ -65,52 +113,12 @@ Useage
      echom GlobalFuncTerm() == "simple terminal"
 
 
-``require.at`` to retrieve exported value
-
-
-- ``Export`` a plain value (no script/local value included)
-
-
-.. code:: vim   
-
-     " ./plain.vim
-    let dic = {}
-    func dic.fun() dict
-        return "function"
-    endfun
-
-    Export {"a": 1 , "b": 2, "test": [1,2,3], "dic": dic}
-
-    " ./test.vim
-    let plain = require.at("plain", expand("<sfile>:p"))
-    echom plain.a == "1"
-    echom type(plain.dic.fun) == v:t_func
-    
-
-
-- ``export.at`` to export private value
-
-
-.. code:: vim   
-     
-     " ./private.vim
-    let s:b = {"a":1,"b":2}
-    fun! s:b.fun() dict
-        return 3
-    endfun
-    let s:k = [1,2,3,4, s:b]
-
-    call export.at(s:k, expand("<sfile>:p"))
-
-    " ./test.vim
-    " require private vmodule
-    let private = require.at("private", expand("<sfile>:p"))
-    echom private[1] == 2
-    echom type(private[4].fun) == v:t_func
 
 
 
 ``ClearRequireCache`` to clear require cache without restart vim
+
+``UnletExport``  clear require cache of current file, easy for deveolping
 
 
 ``TEST`` all test are located in test folder

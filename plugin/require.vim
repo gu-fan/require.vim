@@ -166,6 +166,14 @@ call s:init()
 com! -nargs=1 Require call s:require(expand('<sfile>:p'), expand('<slnum>'),<args>)
 com! -nargs=* -bang Export call s:export(<args>, expand('<sfile>:p'), "<bang>")
 
+
 com! -nargs=0 ClearRequireCache let s:modules = {} | let s:exports = {}
+
+function! s:unlet(file) abort
+    unlet s:exports[a:file]
+    unlet s:modules[a:file]
+    
+endfunction
+com! -nargs=0 UnletExport call s:unlet(expand('<sfile>:p'))
 
 " vim:fdm=indent
