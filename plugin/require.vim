@@ -132,16 +132,22 @@ function! s:export(val, sfile, bang) abort
  
     let f = resolve(fnamemodify(a:sfile, ':p:gs?\\?/?'))
 
-    if !bang && exists('s:exports[f]')
+  
+    if exists('s:exports[f]')
+        if bang
+            echom "value exists,  update with bang"
+            let s:exports[f] = a:val
+        endif
         " echom "[require.vim]  ". f . " already exported"
     else
+        " echom "not exists"
         let s:exports[f] = a:val
     endif
 
 endfunction
 
 function! g:export.at(val, sfile, ...)
-    call s:export(a:val, a:sfile, 1)
+    call s:export(a:val, a:sfile, "!")
 endfunction
 
 function! g:require.at(module, sfile, ... )
@@ -170,9 +176,9 @@ com! -nargs=* -bang Export call s:export(<args>, expand('<sfile>:p'), "<bang>")
 com! -nargs=0 ClearRequireCache let s:modules = {} | let s:exports = {}
 
 function! s:unlet(file) abort
-    unlet s:exports[a:file]
-    unlet s:modules[a:file]
-    
+    echom a:file
+    sil! unlet! s:exports[a:file]
+    sil! unlet! s:modules[a:file]
 endfunction
 com! -nargs=0 UnletExport call s:unlet(expand('<sfile>:p'))
 
