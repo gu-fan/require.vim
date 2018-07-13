@@ -22,30 +22,10 @@ Useage
 ------
 
 
+
+``export.at`` to export private value
+
 ``require.at`` to retrieve exported value
-
-
-- ``Export`` a plain value (no script/local value included)
-
-
-.. code:: vim   
-
-     " ./plain.vim
-    let dic = {}
-    func dic.fun() dict
-        return "function"
-    endfun
-
-    Export {"a": 1 , "b": 2, "test": [1,2,3], "dic": dic}
-
-    " ./test.vim
-    let plain = require.at("plain", expand("<sfile>:p"))
-    echom plain.a == "1"
-    echom type(plain.dic.fun) == v:t_func
-    
-
-
-- ``export.at`` to export private value
 
 
 .. code:: vim   
@@ -57,6 +37,7 @@ Useage
     endfun
     let s:k = [1,2,3,4, s:b]
 
+    " exported value will always be updated when source this file
     call export.at(s:k, expand("<sfile>:p"))
 
     " ./test.vim
@@ -113,6 +94,24 @@ Useage
      echom GlobalFuncTerm() == "simple terminal"
 
 
+- ``Export`` a plain value (no script/local value included)
+
+
+.. code:: vim   
+
+     " ./plain.vim
+    let dic = {}
+    func dic.fun() dict
+        return "function"
+    endfun
+
+    Export {"a": 1 , "b": 2, "test": [1,2,3], "dic": dic}
+
+    " ./test.vim
+    let plain = require.at("plain", expand("<sfile>:p"))
+    echom plain.a == "1"
+    echom type(plain.dic.fun) == v:t_func
+    
 
 
 
